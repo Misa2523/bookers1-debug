@@ -14,7 +14,7 @@ class BooksController < ApplicationController
       redirect_to book_path(@book.id)
     else
       flash[:notice] = "You failed to post."
-      @books = Book.all
+      @books = Book.all  #indexページを描画するため、indexページで使う変数を再定義
       @book = Book.new
       render :index
     end
@@ -30,7 +30,8 @@ class BooksController < ApplicationController
 
   def update
     @book = Book.find(params[:id])
-    if @book.update(book_params)
+    if @book.update(book_params)  #「何をどう更新するか」を指定するために()で引数が必要。
+                                  # ここにストロングパラメータのbook_paramsを渡すことで、フォームから送られてきた内容で更新するという機能を実現
       flash[:notice] = "Book was successfully updated."
       redirect_to book_path(@book.id)
     else
